@@ -1,0 +1,19 @@
+{
+    "name": "maxon755/database-assertion",
+    "description": "Provides database assertion features for symfony projects",
+    "type": "libraby",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Maxon755\\DatabaseAssertion\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Maksym Haiduk",
+            "email": "maksym.haiduk@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
