@@ -12,9 +12,11 @@ use RuntimeException;
 trait DataBaseAssertions
 {
     /**
+     * @param array<string, mixed> $parameters
+     *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function assertDatabaseHas(string $table, array $parameters)
+    public function assertDatabaseHas(string $table, array $parameters): void
     {
         $queryBuilder = $this->buildQuery($table, $parameters);
 
@@ -28,9 +30,11 @@ trait DataBaseAssertions
     }
 
     /**
+     * @param array<string, mixed> $parameters
+     *
      * @throws \Doctrine\DBAL\Exception
      */
-    protected function assertDatabaseMissing(string $table, array $parameters)
+    public function assertDatabaseMissing(string $table, array $parameters): void
     {
         $queryBuilder = $this->buildQuery($table, $parameters);
 
@@ -43,6 +47,9 @@ trait DataBaseAssertions
         );
     }
 
+    /**
+     * @param array<string, mixed> $parameters
+     */
     private function buildQuery(string $table, array $parameters): QueryBuilder
     {
         $queryBuilder = $this->getConnection()->createQueryBuilder();
@@ -62,6 +69,8 @@ trait DataBaseAssertions
     }
 
     /**
+     * @return array<array<string, mixed>>
+     *
      * @throws \Doctrine\DBAL\Exception
      */
     private function getRows(QueryBuilder $queryBuilder): array
