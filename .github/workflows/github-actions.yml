@@ -1,0 +1,31 @@
+name: Database assertions pipeline
+on: [push, pull_request]
+jobs:
+  symfony:
+    name: Symfony (PHP ${{ matrix.php-versions }} on ubuntu-latest
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['7.4', '8.0', '8.1']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # Docs: https://github.com/shivammathur/setup-php
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      - name: Check codestyle
+        run: ./vendor/bin/php-cs-fixer fix --dry-run  -vvv
+
+      - name: Analyse
+        run: vendor/bin/phpstan analyse
+
+      - name: Run tests
+        run: ./vendor/bin/phpunit

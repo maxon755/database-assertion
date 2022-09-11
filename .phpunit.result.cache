@@ -1,1 +1,0 @@
-{"version":1,"defects":{"DatabaseAssertionsTest::testAssertDatabaseHasThrowsExceptionOnEmptySet":3,"DatabaseAssertionsTest::testAssertDatabaseMissingThrowsExceptionOnNonEmptySet":3},"times":{"DatabaseAssertionsTest::testAssertDatabaseHasThrowsExceptionOnEmptySet":0.003,"DatabaseAssertionsTest::testAssertDatabaseMissingThrowsExceptionOnNonEmptySet":0}}
