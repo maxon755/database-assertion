@@ -2,7 +2,7 @@
 
 Provides laravel-like database assertions for integration testing of symfony projects
 
-Uses default doctrine connection `'doctrine.dbal.default_connection'
+Uses default doctrine connection `'doctrine.dbal.default_connection'`
 
 You are welcome to contribute
 
