@@ -1,6 +1,10 @@
 # Database Assertions
 
-Provides laravel-like database assertions for integration testing
+Provides laravel-like database assertions for integration testing of symfony projects
+
+Uses default doctrine connection `'doctrine.dbal.default_connection'
+
+You are welcome to contribute
 
 ### Usage
 
@@ -22,6 +26,4 @@ Check rows are missing in database
         'column1' => 'value1',
         'column2' => 'value2',
     ]);
-```
-
-Uses default doctrine connection `'doctrine.dbal.default_connection'`
+````
