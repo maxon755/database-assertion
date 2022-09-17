@@ -8,7 +8,7 @@ You are welcome to contribute
 
 ### Installation
 ```
-composer require maxon755/database-assertion
+composer require maxon755/database-assertion --dev
 ```
 
 ### Usage
