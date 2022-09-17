@@ -6,6 +6,11 @@ Uses default doctrine connection `'doctrine.dbal.default_connection'
 
 You are welcome to contribute
 
+### Installation
+```
+composer require maxon755/database-assertion
+```
+
 ### Usage
 
 Check database has rows
