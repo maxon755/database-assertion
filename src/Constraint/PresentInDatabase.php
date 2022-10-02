@@ -7,6 +7,7 @@ namespace Maxon755\DatabaseAssertion\Constraint;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use JsonException;
+use Maxon755\DatabaseAssertion\Condition\WhereCondition;
 use Maxon755\DatabaseAssertion\QueryBuilder;
 use PHPUnit\Framework\Constraint\Constraint;
 
@@ -57,6 +58,18 @@ class PresentInDatabase extends Constraint
      */
     public function toString(): string
     {
-        return json_encode($this->parameters, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+        $parameters = [];
+
+        foreach ($this->parameters as $key => $value) {
+            if ($value instanceof WhereCondition) {
+                $parameters[] = [$value->getColumn(), $value->getOperation(), $value->getValue()];
+
+                continue;
+            }
+
+            $parameters[] = [$key, '=', $value];
+        }
+
+        return json_encode($parameters, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
     }
 }
