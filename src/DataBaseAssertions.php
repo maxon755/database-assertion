@@ -5,80 +5,36 @@ declare(strict_types=1);
 namespace Maxon755\DatabaseAssertion;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Query\QueryBuilder;
-use PHPUnit\Framework\Assert;
+use Maxon755\DatabaseAssertion\Constraint\PresentInDatabase;
+use PHPUnit\Framework\Constraint\LogicalNot;
 use RuntimeException;
 
 trait DataBaseAssertions
 {
     /**
      * @param array<string, mixed> $parameters
-     *
-     * @throws \Doctrine\DBAL\Exception
      */
-    public function assertDatabaseHas(string $table, array $parameters): void
+    public function assertDatabaseHas(string $table, array $parameters): self
     {
-        $queryBuilder = $this->buildQuery($table, $parameters);
-
-        $rows = $this->getRows($queryBuilder);
-
-        Assert::assertNotEmpty(
-            $rows,
-            'The result set is empty' . PHP_EOL .
-            'SQL: ' . $queryBuilder->getSQL()
+        $this->assertThat(
+            $table,
+            new PresentInDatabase($this->getConnection(), $parameters)
         );
-    }
 
-    /**
-     * @param array<string, mixed> $parameters
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    public function assertDatabaseMissing(string $table, array $parameters): void
-    {
-        $queryBuilder = $this->buildQuery($table, $parameters);
-
-        $rows = $this->getRows($queryBuilder);
-
-        Assert::assertEmpty(
-            $rows,
-            'The result set IS NOT empty' . PHP_EOL .
-            'SQL: ' . $queryBuilder->getSQL()
-        );
+        return $this;
     }
 
     /**
      * @param array<string, mixed> $parameters
      */
-    private function buildQuery(string $table, array $parameters): QueryBuilder
+    public function assertDatabaseMissing(string $table, array $parameters): self
     {
-        $queryBuilder = $this->getConnection()->createQueryBuilder();
+        $this->assertThat(
+            $table,
+            new LogicalNot(new PresentInDatabase($this->getConnection(), $parameters))
+        );
 
-        $queryBuilder
-            ->select('*')
-            ->from($table)
-        ;
-
-        foreach ($parameters as $name => $value) {
-            $queryBuilder->andWhere("{$name} = :{$name}");
-
-            $queryBuilder->setParameter($name, $value);
-        }
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @return array<array<string, mixed>>
-     *
-     * @throws \Doctrine\DBAL\Exception
-     */
-    private function getRows(QueryBuilder $queryBuilder): array
-    {
-        return $queryBuilder
-            ->executeQuery()
-            ->fetchAllAssociative()
-        ;
+        return $this;
     }
 
     /**

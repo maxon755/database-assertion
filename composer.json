@@ -22,6 +22,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.4",
+        "ext-json": "*",
         "phpunit/phpunit": "^9.5",
         "doctrine/dbal": "^3.4"
     },
