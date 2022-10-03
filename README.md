@@ -19,7 +19,7 @@ Check database has rows
 
     $testCase->assertDatabaseHas('table', [
         'column1' => 'value1',
-        'column2' => 'value2',
+        WhereCondition::make('column2', '>=', 42),
     ]);
 ```
 
@@ -29,6 +29,6 @@ Check rows are missing in database
 
     $testCase->assertDatabaseMissing('table', [
         'column1' => 'value1',
-        'column2' => 'value2',
+        WhereCondition::make('column2', '<', 42),
     ]);
 ````
